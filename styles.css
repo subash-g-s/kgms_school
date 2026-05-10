@@ -35,6 +35,26 @@ h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif;color:var(--navy);lette
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 
+/* SCHOOL LOGO */
+.brand-logo{
+  width:56px;
+  height:56px;
+  object-fit:contain;
+  border-radius:12px;
+  background:#fff;
+  padding:4px;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+.footer-logo{
+  width:52px;
+  height:52px;
+  object-fit:contain;
+  border-radius:10px;
+  background:#fff;
+  padding:4px;
+}
+
 /* NAV */
 .topbar{
   background:var(--navy-deep);color:#cfd6ea;font-size:.85rem;
