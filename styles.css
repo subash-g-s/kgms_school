@@ -19,6 +19,18 @@ body{
   background:var(--white);
   line-height:1.6;
 }
+/* SCROLL PROGRESS BAR */
+.scroll-progress{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  z-index: 9999;
+  background: linear-gradient(90deg,#d4af37,#f5d76e);
+  box-shadow: 0 0 10px rgba(212,175,55,.6);
+  transition: width .08s linear;
+}
 h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif;color:var(--navy);letter-spacing:.2px}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
