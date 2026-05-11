@@ -1,18 +1,97 @@
-// Krishnaswamy Nagar Ganga Nagar Matriculation School - shared scripts
+// Krishnaswamy Nagar Ganga Nagar Matriculation School - Shared Scripts
 
-// Mobile menu toggle
-function toggleMenu() {
-  var m = document.getElementById('m');
-  if (m) m.classList.toggle('open');
-}
-
-// Footer year
 document.addEventListener('DOMContentLoaded', function () {
-  var y = document.getElementById('y');
-  if (y) y.textContent = new Date().getFullYear();
+  // 1. FOOTER YEAR
+  const yearSpan = document.getElementById('y');
+  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 
-  // Contact form handler
-  var form = document.querySelector('form.form-card');
+  // 2. MOBILE MENU TOGGLE
+  window.toggleMenu = function() {
+    const menu = document.getElementById('m');
+    if (menu) menu.classList.toggle('open');
+  };
+
+  // 3. REVEAL ON SCROLL
+  const revealElements = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        // If it's the stats section, trigger counter
+        if (entry.target.classList.contains('stats')) {
+          animateStats();
+        }
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+
+  // 4. ANIMATED STATS COUNTER
+  function animateStats() {
+    const stats = document.querySelectorAll('.stat strong');
+    stats.forEach(stat => {
+      const targetText = stat.textContent;
+      const target = parseInt(targetText.replace(/\D/g, ''));
+      const suffix = targetText.replace(/[0-9]/g, '');
+      let current = 0;
+      const increment = target / 50;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          stat.textContent = target + suffix;
+          clearInterval(timer);
+        } else {
+          stat.textContent = Math.floor(current) + suffix;
+        }
+      }, 30);
+    });
+  }
+
+  // 5. BACK TO TOP & SCROLL PROGRESS
+  const btt = document.getElementById('backToTop');
+  const circle = document.querySelector('.progress-ring__circle');
+  const radius = circle ? circle.r.baseVal.value : 0;
+  const circumference = 2 * Math.PI * radius;
+
+  if (circle) {
+    circle.style.strokeDasharray = `${circumference} ${circumference}`;
+    circle.style.strokeDashoffset = circumference;
+  }
+
+  window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY;
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollPos / totalHeight;
+
+    // Update scroll progress bar
+    const progressBar = document.querySelector('.scroll-progress');
+    if (progressBar) progressBar.style.width = (progress * 100) + '%';
+
+    // Update Back to Top visibility & ring
+    if (btt) {
+      if (scrollPos > 400) {
+        btt.classList.add('visible');
+      } else {
+        btt.classList.remove('visible');
+      }
+
+      if (circle) {
+        const offset = circumference - (progress * circumference);
+        circle.style.strokeDashoffset = offset;
+      }
+    }
+  });
+
+  if (btt) {
+    btt.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // 6. CONTACT FORM HANDLER
+  const form = document.querySelector('form.form-card');
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -20,13 +99,4 @@ document.addEventListener('DOMContentLoaded', function () {
       form.reset();
     });
   }
-});
-// SCROLL PROGRESS BAR
-window.addEventListener("scroll", () => {
-  const scrollTop = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-
-  const progress = (scrollTop / docHeight) * 100;
-
-  document.querySelector(".scroll-progress").style.width = progress + "%";
 });
