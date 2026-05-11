@@ -62,13 +62,8 @@ img{max-width:100%;display:block}
 }
 .topbar a{color:var(--gold-light)}
 .nav{
-  position:sticky;top:0;z-index:50;
-  background:rgba(10,31,68,0.85); /* Premium Glassmorphism */
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  color:var(--white);
-  box-shadow:0 4px 30px rgba(0,0,0,0.1);
-  border-bottom:1px solid rgba(255,255,255,0.05);
+  position:sticky;top:0;z-index:50;background:var(--navy);
+  color:var(--white);box-shadow:var(--shadow);
 }
 .nav-inner{
   max-width:1650px;margin:0 auto;padding:.9rem 1.25rem;
@@ -83,7 +78,7 @@ img{max-width:100%;display:block}
   color:#dde3f3;padding:.55rem .9rem;border-radius:6px;font-weight:500;font-size:.95rem;
   transition:.2s;
 }
-.menu a:hover,.menu a.active{background:rgba(212,175,55,.15);color:var(--gold-light)}
+.menu a:hover,.menu a.active{background:rgba(255,255,255,0.08);color:var(--gold-light)}
 .menu-toggle{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer}
 
 /* HERO */
@@ -548,7 +543,56 @@ footer a:hover{color:var(--gold-light)}
   }
 }
 
-/* MOBILE NAVBAR IMPROVEMENTS */
+
+
+/* SKELETON LOADING */
+.skeleton {
+  background: linear-gradient(90deg, #f0f2f5 25%, #e0e4e9 50%, #f0f2f5 75%);
+  background-size: 200% 100%;
+  animation: skeletonLoading 1.5s infinite;
+}
+@keyframes skeletonLoading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* LIGHTBOX */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 21, 51, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+}
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+.lb-content {
+  max-width: 90%;
+  max-height: 85%;
+  border-radius: 12px;
+  box-shadow: 0 0 50px rgba(0,0,0,0.5);
+  transform: scale(0.9);
+  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.lightbox.active .lb-content {
+  transform: scale(1);
+}
+.lb-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
 @media(max-width:768px){
 

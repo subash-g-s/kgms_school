@@ -99,4 +99,40 @@ document.addEventListener('DOMContentLoaded', function () {
       form.reset();
     });
   }
+
+  // 7. LIGHTBOX FOR GALLERY
+  const galleryTiles = document.querySelectorAll('.gallery-grid .tile img');
+  if (galleryTiles.length > 0) {
+    const lb = document.createElement('div');
+    lb.className = 'lightbox';
+    lb.innerHTML = `
+      <span class="lb-close">&times;</span>
+      <img class="lb-content" src="" alt="Full view">
+    `;
+    document.body.appendChild(lb);
+    const lbImg = lb.querySelector('.lb-content');
+    const lbClose = lb.querySelector('.lb-close');
+    galleryTiles.forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', () => {
+        lb.classList.add('active');
+        lbImg.src = img.src;
+      });
+    });
+    lbClose.addEventListener('click', () => lb.classList.remove('active'));
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb) lb.classList.remove('active');
+    });
+  }
+
+  // 8. SKELETON LOADER REMOVAL
+  const skeletonImages = document.querySelectorAll('img');
+  skeletonImages.forEach(img => {
+    if (!img.complete) {
+      img.parentElement.classList.add('skeleton');
+      img.addEventListener('load', () => {
+        img.parentElement.classList.remove('skeleton');
+      });
+    }
+  });
 });
