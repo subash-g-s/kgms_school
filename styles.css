@@ -18,6 +18,7 @@ body{
   color:var(--text);
   background:var(--white);
   line-height:1.6;
+  overflow-x:hidden;
 }
 /* SCROLL PROGRESS BAR */
 .scroll-progress{
@@ -249,7 +250,7 @@ img{max-width:100%;display:block}
   background:linear-gradient(90deg,transparent,var(--gold),transparent);
 }
 .page-head h1{color:#fff;font-size:clamp(1.8rem,3.5vw,2.8rem)}
-.page-head p{color:#cdd5ec;margin-top:.5rem}
+.page-head p{color:#cdd5ec;margin:.5rem auto 0;max-width:640px}
 .crumbs{margin-top:1rem;font-size:.85rem;color:var(--gold-light)}
 .crumbs a{color:#d8def0}
 .crumbs a:hover{color:var(--gold-light)}
@@ -499,7 +500,7 @@ section{padding:4.5rem 1.25rem}
   font-family:'Playfair Display', Georgia, serif;
   font-size:clamp(1.8rem,3vw,2.5rem);
   color:var(--navy);
-  letter-spacing:.05em;
+  letter-spacing:.04em;
 }
 .motto-list{
   list-style:none;
@@ -770,6 +771,7 @@ section{padding:4.5rem 1.25rem}
   background:rgba(255,255,255,.06);
   border:1px solid rgba(255,255,255,.08);
 }
+.payment-box p{line-height:1.7}
 .payment-box strong{
   display:block;
   color:var(--gold-light);
@@ -910,6 +912,9 @@ section{padding:4.5rem 1.25rem}
   .uniform-grid{
     grid-template-columns:1fr;
   }
+  section{padding:4rem 1rem}
+  .section-head{margin-bottom:2.35rem}
+  .section-shell{border-radius:22px}
 }
 @media(max-width:640px){
   .info-grid,
@@ -936,6 +941,40 @@ section{padding:4.5rem 1.25rem}
   .link-card{
     align-items:flex-start;
     flex-direction:column;
+  }
+  .motto-list li,
+  .document-pill,
+  .guidance-points li{
+    padding:.9rem;
+  }
+  .schedule-list li{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:.2rem;
+  }
+  .principal{
+    padding:1.6rem;
+  }
+  .principal .avatar{
+    width:150px;
+    height:150px;
+    margin:0 auto;
+  }
+  .principal .avatar svg{
+    width:70px;
+    height:70px;
+  }
+  .quote-panel .quote-lines{
+    font-size:clamp(1.45rem,6vw,1.9rem);
+  }
+  .motto-frame{
+    padding:1.25rem 1rem;
+  }
+  .admission-panel,
+  .payment-panel,
+  .form-card,
+  .info-card{
+    padding:1.35rem;
   }
 }
 
