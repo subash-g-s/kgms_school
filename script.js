@@ -135,16 +135,25 @@ document.addEventListener('DOMContentLoaded', function () {
   let closeLightbox = null;
 
   if (galleryTiles.length > 0) {
-    const lightbox = document.createElement('div');
-    lightbox.className = 'lightbox';
-    lightbox.innerHTML = `
-      <span class="lb-close">&times;</span>
-      <img class="lb-content" src="" alt="Expanded gallery image">
-    `;
-    document.body.appendChild(lightbox);
+    let lightbox = document.querySelector('.lightbox');
+    if (!lightbox) {
+      lightbox = document.createElement('div');
+      lightbox.className = 'lightbox';
+      lightbox.innerHTML = `
+        <span class="lb-close">&times;</span>
+        <img class="lb-content" src="" alt="Expanded gallery image">
+      `;
+      document.body.appendChild(lightbox);
+    }
 
     const lightboxImage = lightbox.querySelector('.lb-content');
     const lightboxClose = lightbox.querySelector('.lb-close');
+    const openLightbox = function (image) {
+      lightbox.classList.add('active');
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt || 'Expanded gallery image';
+    };
+
     closeLightbox = function () {
       lightbox.classList.remove('active');
     };
@@ -152,9 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
     galleryTiles.forEach((image) => {
       image.style.cursor = 'zoom-in';
       image.addEventListener('click', () => {
-        lightbox.classList.add('active');
-        lightboxImage.src = image.src;
-        lightboxImage.alt = image.alt || 'Expanded gallery image';
+        openLightbox(image);
       });
     });
 
