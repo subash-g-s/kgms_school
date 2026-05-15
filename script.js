@@ -232,3 +232,36 @@ if (navbar) {
     }
   });
 });
+emailjs.init("_4fpT5e0uh0wc-TR6");
+
+const form = document.getElementById("enquiry-form");
+
+form.addEventListener("submit", function (e) {
+
+  e.preventDefault();
+  // Mail to school owner
+  emailjs.sendForm(
+    "service_yzhxdi9",
+    "template_4wy93ot",
+    this
+  )
+
+  // Auto reply to parent/user
+
+  .then(() => {
+
+    alert("Message sent successfully!");
+
+    form.reset();
+
+  })
+
+  .catch((error) => {
+
+    console.error("FAILED...", error);
+
+    alert("Something went wrong.");
+
+  });
+
+});
