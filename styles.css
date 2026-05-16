@@ -99,7 +99,7 @@ img {
 .nav {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 9000;
   background: var(--navy);
   color: var(--white);
   box-shadow: var(--shadow);
@@ -2114,7 +2114,7 @@ footer a:hover {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-
+    flex-wrap: wrap; /* Ensure menu can wrap below logo */
     padding: .9rem 1rem;
   }
 
@@ -2142,45 +2142,72 @@ footer a:hover {
   /* MENU BUTTON */
   .menu-toggle {
     display: flex;
-
     align-items: center;
     justify-content: center;
-
-    width: 46px;
-    height: 46px;
-
-    border-radius: 10px;
-
-    background: rgba(255, 255, 255, .08);
-
-    color: #fff;
-
-    font-size: 1.4rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
 
-  /* MOBILE MENU */
+  .menu-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--gold);
+  }
+
+  .menu-toggle.active {
+    background: var(--gold);
+    color: var(--navy-deep);
+    border-color: var(--gold);
+  }
+
+  .menu-toggle svg line {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+  }
+
+  .menu-toggle.active .line-1 {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .menu-toggle.active .line-2 {
+    opacity: 0;
+  }
+
+  .menu-toggle.active .line-3 {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* MOBILE MENU UPGRADE */
   .menu {
     display: none;
-
     flex-direction: column;
-
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     width: 100%;
-
-    margin-top: 1rem;
-
-    padding: .7rem;
-
-    border-radius: 14px;
-
-    background: rgba(6, 21, 51, .96);
-
-    backdrop-filter: blur(10px);
-
-    border: 1px solid rgba(255, 255, 255, .06);
+    background: rgba(6, 21, 51, 0.98);
+    backdrop-filter: blur(15px);
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    margin-top: 0; /* Align directly under nav */
   }
 
   .menu.open {
     display: flex;
+    animation: menuFadeIn 0.3s ease forwards;
+  }
+
+  @keyframes menuFadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   /* MENU LINKS */
