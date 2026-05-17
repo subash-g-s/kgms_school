@@ -774,13 +774,21 @@ section {
   background: linear-gradient(135deg, var(--navy), var(--navy-soft));
   border: 1px solid #e8ecf6;
   box-shadow: 0 10px 24px rgba(10, 31, 68, .08);
-  transition: transform .3s, border-color .3s, box-shadow .3s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s, box-shadow 0.3s;
 }
 
-.gallery-grid .tile:hover {
-  transform: translateY(-4px);
+.gallery-grid .tile.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-grid .tile.visible:hover {
+  transform: translateY(-6px) scale(1.02);
   border-color: var(--gold);
-  box-shadow: var(--shadow)
+  box-shadow: 0 20px 40px rgba(10, 31, 68, 0.15);
+  z-index: 2;
 }
 
 .gallery-grid .tile img {

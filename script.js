@@ -245,6 +245,25 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // 8. STAGGERED GALLERY ANIMATION
+  const galleryGrid = document.querySelector('.gallery-grid');
+  if (galleryGrid) {
+    const tiles = galleryGrid.querySelectorAll('.tile');
+    const tileObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = Array.from(tiles).indexOf(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, (index % 3) * 150);
+          tileObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    tiles.forEach((tile) => tileObserver.observe(tile));
+  }
+
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       setMenuState(false);
