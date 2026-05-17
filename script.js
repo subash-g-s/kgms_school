@@ -118,61 +118,92 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // CUSTOM TOAST NOTIFICATION
+  function showNotification(message, type = 'success') {
+    const existing = document.querySelector('.custom-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = `custom-toast toast-${type}`;
+
+    const iconSvg = type === 'success'
+      ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`
+      : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`;
+
+    toast.innerHTML = `
+      <div class="toast-icon">${iconSvg}</div>
+      <div class="toast-content">
+        <h4>${type === 'success' ? 'Message Sent' : 'Delivery Failed'}</h4>
+        <p>${message}</p>
+      </div>
+      <button class="toast-close" aria-label="Close message">&times;</button>
+    `;
+
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.classList.add('show');
+    });
+
+    toast.querySelector('.toast-close').addEventListener('click', () => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 400);
+    });
+
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+      }
+    }, 5000);
+  }
+
   emailjs.init("_4fpT5e0uh0wc-TR6");
 
-const enquiryForm = document.getElementById("enquiry-form");
+  const enquiryForm = document.getElementById("enquiry-form");
 
-if (enquiryForm) {
+  if (enquiryForm) {
 
-  enquiryForm.addEventListener("submit", function (e) {
+    enquiryForm.addEventListener("submit", function (e) {
 
-    e.preventDefault();
+      e.preventDefault();
 
-    const templateParams = {
-      from_name: enquiryForm.from_name.value,
-      from_email: enquiryForm.from_email.value,
-      phone: enquiryForm.phone.value,
-      subject: enquiryForm.subject.value,
-      message: enquiryForm.message.value
-    };
+      const templateParams = {
+        from_name: enquiryForm.from_name.value,
+        from_email: enquiryForm.from_email.value,
+        phone: enquiryForm.phone.value,
+        subject: enquiryForm.subject.value,
+        message: enquiryForm.message.value
+      };
 
-    // Mail to school
-    emailjs.send(
-      "service_yzhxdi9",
-      "template_4wy93ot",
-      templateParams
-    )
-
-    .then(() => {
-
-      // Thank-you mail to parent/user
-      return emailjs.send(
+      // Mail to school
+      emailjs.send(
         "service_yzhxdi9",
-        "template_l5t9h1b",
+        "template_4wy93ot",
         templateParams
-      );
+      )
 
-    })
 
-    .then(() => {
 
-      alert("Message sent successfully!");
+        .then(() => {
 
-      enquiryForm.reset();
+          showNotification("Thank you! We will get back to you shortly.", "success");
 
-    })
+          enquiryForm.reset();
 
-    .catch((error) => {
+        })
 
-      console.error("FAILED...", error);
+        .catch((error) => {
 
-      alert("Failed to send message.");
+          console.error("FAILED...", error);
+
+          showNotification("Something went wrong. Please try again later.", "error");
+
+        });
 
     });
 
-  });
-
-}
+  }
   // 7. GALLERY LIGHTBOX
   const galleryTiles = document.querySelectorAll('.gallery-grid .tile img');
   let closeLightbox = null;
