@@ -158,7 +158,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 5000);
   }
 
-  emailjs.init("_4fpT5e0uh0wc-TR6");
+  if (typeof emailjs !== 'undefined') {
+    emailjs.init("_4fpT5e0uh0wc-TR6");
+  }
 
   const enquiryForm = document.getElementById("enquiry-form");
 
