@@ -5,85 +5,42 @@ document.addEventListener('DOMContentLoaded', function () {
   const yearSpan = document.getElementById('y');
   if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 
-  // 2. PREMIUM MOBILE MENU
-const menu = document.getElementById('m');
-const menuToggle = document.querySelector('.menu-toggle');
+  // 2. MOBILE MENU TOGGLE
+  const menu = document.getElementById('m');
+  const menuToggle = document.querySelector('.menu-toggle');
 
-function setMenuState(isOpen) {
-
-  if (!menu) return;
-
-  menu.classList.toggle('show', isOpen);
-
-  document.body.classList.toggle('menu-open', isOpen);
+  function setMenuState(isOpen) {
+    if (!menu) return;
+    menu.classList.toggle('open', isOpen);
+    if (menuToggle) {
+      menuToggle.classList.toggle('active', isOpen);
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    }
+  }
 
   if (menuToggle) {
-    menuToggle.setAttribute('aria-expanded', String(isOpen));
-    menuToggle.setAttribute(
-      'aria-label',
-      isOpen ? 'Close menu' : 'Open menu'
-    );
-  }
-}
-
-window.toggleMenu = function () {
-
-  if (!menu) return;
-
-  setMenuState(
-    !menu.classList.contains('show')
-  );
-};
-
-if (menuToggle) {
-
-  menuToggle.setAttribute('aria-expanded', 'false');
-
-  menuToggle.setAttribute(
-    'aria-label',
-    'Open menu'
-  );
-}
-
-/* CLOSE MENU WHEN LINK CLICKED */
-
-if (menu) {
-
-  menu.querySelectorAll('a').forEach((link) => {
-
-    link.addEventListener('click', () => {
-
-      if (window.innerWidth <= 900) {
-        setMenuState(false);
-      }
-
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setMenuState(!menu.classList.contains('open'));
     });
-
-  });
-
-}
-
-/* CLICK OUTSIDE TO CLOSE */
-
-document.addEventListener('click', (event) => {
-
-  if (
-    !menu ||
-    !menuToggle ||
-    window.innerWidth > 900
-  ) return;
-
-  if (!menu.classList.contains('show')) return;
-
-  const insideMenu = menu.contains(event.target);
-
-  const onToggle = menuToggle.contains(event.target);
-
-  if (!insideMenu && !onToggle) {
-    setMenuState(false);
   }
 
-});
+  if (menu) {
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) setMenuState(false);
+      });
+    });
+  }
+
+  document.addEventListener('click', (event) => {
+    if (!menu || !menuToggle || window.innerWidth > 768) return;
+    if (!menu.classList.contains('open')) return;
+    const insideMenu = menu.contains(event.target);
+    const onToggle = menuToggle.contains(event.target);
+    if (!insideMenu && !onToggle) setMenuState(false);
+  });
 
   // 3. REVEAL ON SCROLL
   const revealElements = document.querySelectorAll('.reveal');
@@ -134,19 +91,6 @@ document.addEventListener('click', (event) => {
   }
 
   window.addEventListener('scroll', () => {
-    /* NAVBAR SCROLL GLASS EFFECT */
-
-const navbar = document.querySelector('.nav');
-
-if (navbar) {
-
-  if (window.scrollY > 40) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
-  }
-
-}
     const scrollPos = window.scrollY;
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = totalHeight > 0 ? scrollPos / totalHeight : 0;
@@ -231,37 +175,4 @@ if (navbar) {
       if (closeLightbox) closeLightbox();
     }
   });
-});
-emailjs.init("_4fpT5e0uh0wc-TR6");
-
-const form = document.getElementById("enquiry-form");
-
-form.addEventListener("submit", function (e) {
-
-  e.preventDefault();
-  // Mail to school owner
-  emailjs.sendForm(
-    "service_yzhxdi9",
-    "template_4wy93ot",
-    this
-  )
-
-  // Auto reply to parent/user
-
-  .then(() => {
-
-    alert("Message sent successfully!");
-
-    form.reset();
-
-  })
-
-  .catch((error) => {
-
-    console.error("FAILED...", error);
-
-    alert("Something went wrong.");
-
-  });
-
 });
