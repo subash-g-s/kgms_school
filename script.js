@@ -158,7 +158,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 5000);
   }
 
-  emailjs.init("_4fpT5e0uh0wc-TR6");
+  if (typeof emailjs !== 'undefined') {
+    emailjs.init("_4fpT5e0uh0wc-TR6");
+  }
 
   const enquiryForm = document.getElementById("enquiry-form");
 
@@ -243,6 +245,25 @@ document.addEventListener('DOMContentLoaded', function () {
     lightbox.addEventListener('click', (event) => {
       if (event.target === lightbox) closeLightbox();
     });
+  }
+
+  // 8. STAGGERED GALLERY ANIMATION
+  const galleryGrid = document.querySelector('.gallery-grid');
+  if (galleryGrid) {
+    const tiles = galleryGrid.querySelectorAll('.tile');
+    const tileObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = Array.from(tiles).indexOf(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, (index % 3) * 150);
+          tileObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    tiles.forEach((tile) => tileObserver.observe(tile));
   }
 
   document.addEventListener('keydown', (event) => {
