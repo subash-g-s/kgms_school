@@ -118,16 +118,61 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // 6. CONTACT FORM HANDLER
-  const form = document.querySelector('form.form-card');
-  if (form) {
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-      alert('Thank you! We will get back to you shortly.');
-      form.reset();
-    });
-  }
+  emailjs.init("_4fpT5e0uh0wc-TR6");
 
+const enquiryForm = document.getElementById("enquiry-form");
+
+if (enquiryForm) {
+
+  enquiryForm.addEventListener("submit", function (e) {
+
+    e.preventDefault();
+
+    const templateParams = {
+      from_name: enquiryForm.from_name.value,
+      from_email: enquiryForm.from_email.value,
+      phone: enquiryForm.phone.value,
+      subject: enquiryForm.subject.value,
+      message: enquiryForm.message.value
+    };
+
+    // Mail to school
+    emailjs.send(
+      "service_yzhxdi9",
+      "template_4wy93ot",
+      templateParams
+    )
+
+    .then(() => {
+
+      // Thank-you mail to parent/user
+      return emailjs.send(
+        "service_yzhxdi9",
+        "template_l5t9h1b",
+        templateParams
+      );
+
+    })
+
+    .then(() => {
+
+      alert("Message sent successfully!");
+
+      enquiryForm.reset();
+
+    })
+
+    .catch((error) => {
+
+      console.error("FAILED...", error);
+
+      alert("Failed to send message.");
+
+    });
+
+  });
+
+}
   // 7. GALLERY LIGHTBOX
   const galleryTiles = document.querySelectorAll('.gallery-grid .tile img');
   let closeLightbox = null;
