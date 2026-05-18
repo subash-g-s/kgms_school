@@ -291,11 +291,11 @@ img {
   background-position: center center;
   background-repeat: no-repeat;
 
-  animation: heroSlider 16s infinite ease-in-out;
+  animation: heroSlider 16s infinite ease-in-out, heroZoom 20s infinite alternate ease-in-out;
 
   z-index: 0;
 
-  transform: scale(1.02);
+  transform: scale(1.05);
 }
 
 .hero::after {
@@ -1847,6 +1847,32 @@ footer li {
   padding: .3rem 0
 }
 
+footer ul li a {
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+footer ul li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1.5px;
+  bottom: 0px;
+  left: 50%;
+  background-color: var(--gold-light);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+footer ul li a:hover {
+  color: var(--white);
+}
+
+footer ul li a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
 footer a:hover {
   color: var(--gold-light)
 }
@@ -2051,6 +2077,16 @@ footer a:hover {
       linear-gradient(rgba(6, 21, 51, .58),
         rgba(10, 31, 68, .64)),
       url("KGMS/Yoga.png");
+  }
+}
+
+@keyframes heroZoom {
+  0% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1.18);
   }
 }
 
