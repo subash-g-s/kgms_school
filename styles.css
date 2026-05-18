@@ -1,4 +1,4 @@
-/* Krishnaswamy Nagar Ganga Nagar Matriculation School */
+﻿/* Krishnaswamy Nagar Ganga Nagar Matriculation School */
 :root {
   --navy: #0a1f44;
   --navy-deep: #061533;
@@ -2052,7 +2052,7 @@ footer a:hover {
     background-image:
       linear-gradient(rgba(6, 21, 51, .58),
         rgba(10, 31, 68, .64)),
-      url("KGMS/Class interior from back.png");
+      url("KGMS/class-interior-from-back.png");
   }
 
   40%,
@@ -2060,7 +2060,7 @@ footer a:hover {
     background-image:
       linear-gradient(rgba(6, 21, 51, .58),
         rgba(10, 31, 68, .64)),
-      url("KGMS/Computer Lab.png");
+      url("KGMS/computer-lab.png");
   }
 
   60%,
@@ -2068,7 +2068,7 @@ footer a:hover {
     background-image:
       linear-gradient(rgba(6, 21, 51, .58),
         rgba(10, 31, 68, .64)),
-      url("KGMS/School Ground.png");
+      url("KGMS/school-ground.png");
   }
 
   80%,
