@@ -90,27 +90,35 @@ document.addEventListener('DOMContentLoaded', function () {
     circle.style.strokeDashoffset = circumference;
   }
 
+  const progressBar = document.querySelector('.scroll-progress');
+  let isScrolling = false;
+
   window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY;
-    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = totalHeight > 0 ? scrollPos / totalHeight : 0;
+    if (!isScrolling) {
+      window.requestAnimationFrame(() => {
+        const scrollPos = window.scrollY;
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = totalHeight > 0 ? scrollPos / totalHeight : 0;
 
-    const progressBar = document.querySelector('.scroll-progress');
-    if (progressBar) progressBar.style.width = (progress * 100) + '%';
+        if (progressBar) progressBar.style.width = (progress * 100) + '%';
 
-    if (btt) {
-      if (scrollPos > 400) {
-        btt.classList.add('visible');
-      } else {
-        btt.classList.remove('visible');
-      }
+        if (btt) {
+          if (scrollPos > 400) {
+            btt.classList.add('visible');
+          } else {
+            btt.classList.remove('visible');
+          }
 
-      if (circle) {
-        const offset = circumference - (progress * circumference);
-        circle.style.strokeDashoffset = offset;
-      }
+          if (circle) {
+            const offset = circumference - (progress * circumference);
+            circle.style.strokeDashoffset = offset;
+          }
+        }
+        isScrolling = false;
+      });
+      isScrolling = true;
     }
-  });
+  }, { passive: true });
 
   if (btt) {
     btt.addEventListener('click', () => {
@@ -167,8 +175,12 @@ document.addEventListener('DOMContentLoaded', function () {
   if (enquiryForm) {
 
     enquiryForm.addEventListener("submit", function (e) {
-
       e.preventDefault();
+
+      const submitBtn = enquiryForm.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.textContent;
+      submitBtn.textContent = "Sending...";
+      submitBtn.disabled = true;
 
       const templateParams = {
         from_name: enquiryForm.from_name.value,
@@ -184,25 +196,18 @@ document.addEventListener('DOMContentLoaded', function () {
         "template_4wy93ot",
         templateParams
       )
-
-
-
         .then(() => {
-
           showNotification("Thank you! We will get back to you shortly.", "success");
-
           enquiryForm.reset();
-
         })
-
         .catch((error) => {
-
           console.error("FAILED...", error);
-
           showNotification("Something went wrong. Please try again later.", "error");
-
+        })
+        .finally(() => {
+          submitBtn.textContent = originalBtnText;
+          submitBtn.disabled = false;
         });
-
     });
 
   }
