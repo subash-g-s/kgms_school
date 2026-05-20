@@ -2392,3 +2392,12 @@ footer a:hover {
 .custom-toast .toast-close:hover {
   color: #fff;
 }
+#page-loader {
+  position: fixed;
+  inset: 0;
+  background: #081325;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
