@@ -1,4 +1,4 @@
-﻿/* Krishnaswamy Nagar Ganga Nagar Matriculation School */
+/* Krishnaswamy Nagar Ganga Nagar Matriculation School */
 :root {
   --navy: #0a1f44;
   --navy-deep: #061533;
@@ -2392,6 +2392,7 @@ footer a:hover {
 .custom-toast .toast-close:hover {
   color: #fff;
 }
+<<<<<<< Updated upstream
 #page-loader {
   position: fixed;
   inset: 0;
@@ -2400,4 +2401,71 @@ footer a:hover {
   justify-content: center;
   align-items: center;
   z-index: 99999;
+=======
+
+/* LOADING SCREEN */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--navy-deep);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading-screen .loader-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.loading-screen .loader-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 16px;
+  background: #fff;
+  padding: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(212, 175, 55, 0.3);
+  animation: pulseLogo 2s infinite ease-in-out;
+}
+
+.loading-screen .spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(212, 175, 55, 0.2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes pulseLogo {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(212, 175, 55, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(212, 175, 55, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(212, 175, 55, 0.3);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+>>>>>>> Stashed changes
 }
