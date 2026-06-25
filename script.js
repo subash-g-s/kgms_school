@@ -11,15 +11,7 @@ window.addEventListener('load', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-  const pageLoader = document.getElementById('page-loader');
 
-window.addEventListener('load', () => {
-
-  if(pageLoader){
-      pageLoader.style.display='none';
-  }
-
-});
   // 1. FOOTER YEAR
   const yearSpan = document.getElementById('y');
   if (yearSpan) yearSpan.textContent = new Date().getFullYear();

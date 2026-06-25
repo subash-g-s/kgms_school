@@ -2392,17 +2392,6 @@ footer a:hover {
 .custom-toast .toast-close:hover {
   color: #fff;
 }
-<<<<<<< Updated upstream
-#page-loader {
-  position: fixed;
-  inset: 0;
-  background: #081325;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 99999;
-=======
-
 /* LOADING SCREEN */
 .loading-screen {
   position: fixed;
@@ -2467,5 +2456,4 @@ footer a:hover {
   to {
     transform: rotate(360deg);
   }
->>>>>>> Stashed changes
 }
